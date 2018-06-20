@@ -48,6 +48,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         ),
     )
     USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
     objects = MyUserManager()
 
     def __str__(self):
@@ -57,10 +58,12 @@ class User(AbstractBaseUser, PermissionsMixin):
         ext = filename.split('.')[-1]
         filename = "%s.%s" % (shortuuid.uuid(), ext)
         return os.path.join('user_uploads/', filename)
-    
-class Preference(models.Model):
-    tag = models.CharField(max_length=20, blank=True)
 
+class Preference(models.Model):
+    tag = models.CharField(max_length=20, blank=True, null=True)
+
+    def __str__(self):
+        return self.tag
 class Profile(models.Model):
     """
     Profile class to display user info
@@ -74,13 +77,10 @@ class Profile(models.Model):
     status = models.TextField(blank=True)
     recent_location_X = models.CharField(max_length=15, blank=True)
     recent_location_Y = models.CharField(max_length=15, blank=True)
-    user_preference = models.ForeignKey(Preference, on_delete=models.CASCADE)
-    def create_profile(self, user, profile_pic):
-        pass
+    user_preference = models.ManyToManyField(Preference, blank=True)
+
     def __str__(self):
         return str(self.user)
-    def get_username(self):
-        return self.username
 
 class FriendList(models.Model):
     """
