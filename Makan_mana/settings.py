@@ -41,10 +41,16 @@ INSTALLED_APPS = [
     'Restaurant',
     'rest_framework',
     'knox',
+    'django_filters',
 ]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': ('knox.auth.TokenAuthentication',),
+    'DEFAULT_FILTER_BACKENDS': (
+        'rest_framework.filters.SearchFilter',
+        'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.OrderingFilter',
+    ),
 }
 REST_KNOX = {
   'USER_SERIALIZER': 'User_base.serializers.CustomKnoxSerializers',

@@ -45,6 +45,7 @@ class UserProfileListView(generics.ListCreateAPIView):
 class ProfileCreateView(generics.ListCreateAPIView):
     queryset = Profile.objects.all()
     serializer_class = serializers.ProfileSerializer
+    lookup_field = 'email'
     # permission_classes = {
     #     permissions.IsAuthenticatedOrReadOnly,
     # }
