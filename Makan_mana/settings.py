@@ -53,7 +53,8 @@ REST_FRAMEWORK = {
     ),
 }
 REST_KNOX = {
-  'USER_SERIALIZER': 'User_base.serializers.CustomKnoxSerializers',
+    'USER_SERIALIZER': 'User_base.serializers.CustomKnoxSerializers',
+    'TOKEN_TTL': None,
 }
 
 MIDDLEWARE = [

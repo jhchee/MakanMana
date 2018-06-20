@@ -9,9 +9,9 @@ class CustomUserAdmin(admin.ModelAdmin):
 
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ['user', 'username']
-    filter_horizontal = ('user_preference',)
-    search_fields = ['username']
-    list_filter = ['user_preference']
+    filter_horizontal = ('preference',)
+    search_fields = ['username', 'user__email']
+    list_filter = ['preference']
 
 
 admin.site.register(Preference)

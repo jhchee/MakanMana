@@ -58,3 +58,8 @@ class CustomKnoxSerializers(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
+
+class PreferenceSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Preference
+        fields = '__all__'

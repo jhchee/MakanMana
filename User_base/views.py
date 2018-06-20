@@ -35,6 +35,12 @@ class UserCreateView(generics.ListCreateAPIView):
 class UserProfileListView(generics.ListCreateAPIView):
     queryset = Profile.objects.all()
     serializer_class = serializers.ProfileSerializer
+
+    search_fields = ('username')
+    filter_fields = ('preference',)
+    ordering_fields = ('username',)
+    ordering = ('-username',)
+
     def get_queryset(self):
         queryset = Profile.objects.all()
         username = self.request.query_params.get('username', None)
@@ -51,17 +57,10 @@ class ProfileCreateView(generics.ListCreateAPIView):
     # }
 
 class FriendListCreateView(generics.ListCreateAPIView):
-    queryset = Profile.objects.all()
-    serializer_class = serializers.FriendListSerializer
-    # permission_classes = {
-    #     permissions.IsAuthenticatedOrReadOnly,
-    # }
-
-class FriendListView(generics.ListCreateAPIView):
     queryset = FriendList.objects.all()
     serializer_class = serializers.FriendListSerializer
     # permission_classes = {
-    #     permissions.IsAuthenticated,
+    #     permissions.IsAuthenticatedOrReadOnly,
     # }
     def get_queryset(self):
         queryset = FriendList.objects.all()
@@ -69,3 +68,18 @@ class FriendListView(generics.ListCreateAPIView):
         if email is not None:
             queryset = queryset.filter(email__icontains=email)
         return queryset
+
+class FriendListDetailsView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = FriendList.objects.all()
+    serializer_class = serializers.FriendListSerializer
+    # permission_classes = {
+    #     permissions.IsAuthenticated,
+    # }
+
+
+class PreferenceView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Preference.objects.all()
+    serializer_class = serializers.PreferenceSerializers
+    # permission_classes = {
+    #     permissions.IsAuthenticatedOrReadOnly,
+    # }

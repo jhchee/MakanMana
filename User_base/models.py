@@ -68,16 +68,16 @@ class Profile(models.Model):
     """
     Profile class to display user info
     """
-    user = models.OneToOneField(User, blank=True, null=True, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, blank=False, null=True, on_delete=models.CASCADE)
     username = models.CharField(blank=False, null=True, max_length=20)
     profile_pic = models.ImageField(upload_to=User.get_file_path, null=True, blank=True)
     age = models.IntegerField(null=True, blank=True)
-    GENDER_CHOICES = ((0, 'Male'), (1,'Female'),)
+    GENDER_CHOICES = ((0, 'Male'), (1,'Female'),(2, 'Unspecified'))
     gender = models.IntegerField(choices=GENDER_CHOICES, null=True, blank=True)
     status = models.TextField(blank=True)
     recent_location_X = models.CharField(max_length=15, blank=True)
     recent_location_Y = models.CharField(max_length=15, blank=True)
-    user_preference = models.ManyToManyField(Preference, blank=True)
+    preference = models.ManyToManyField(Preference, blank=True)
 
     def __str__(self):
         return str(self.user)
@@ -86,8 +86,8 @@ class FriendList(models.Model):
     """
     FriendList class to list friend(s) of that particular user
     """
-    current_user = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name="This_user", null=True)
-    friend_list = models.ManyToManyField(User)
+    profile = models.OneToOneField(Profile, on_delete=models.DO_NOTHING, related_name="This_user", null=True)
+    friend_list = models.ManyToManyField(Profile, blank=True)
     def __str__(self):
         return str(self.current_user)
 
