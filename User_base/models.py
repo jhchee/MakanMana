@@ -4,6 +4,7 @@ import os
 import shortuuid
 from django.utils.translation import ugettext_lazy as _
 
+
 class MyUserManager(BaseUserManager):
     def _create_user(self, email, password, **extra_fields):
         """
@@ -38,6 +39,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         _('staff status'),
         default=False,
         help_text=_('Designates whether the user can log into this site.'),
+        blank=True,
     )
     is_active = models.BooleanField(
         _('active'),
@@ -46,6 +48,7 @@ class User(AbstractBaseUser, PermissionsMixin):
             'Designates whether this user should be treated as active. '
             'Unselect this instead of deleting accounts.'
         ),
+        blank=True,
     )
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -59,11 +62,14 @@ class User(AbstractBaseUser, PermissionsMixin):
         filename = "%s.%s" % (shortuuid.uuid(), ext)
         return os.path.join('user_uploads/', filename)
 
+
 class Preference(models.Model):
     tag = models.CharField(max_length=20, blank=True, null=True)
 
     def __str__(self):
         return self.tag
+
+
 class Profile(models.Model):
     """
     Profile class to display user info
@@ -72,9 +78,9 @@ class Profile(models.Model):
     username = models.CharField(blank=False, null=True, max_length=20)
     profile_pic = models.ImageField(upload_to=User.get_file_path, null=True, blank=True)
     age = models.IntegerField(null=True, blank=True)
-    GENDER_CHOICES = ((0, 'Male'), (1,'Female'),(2, 'Unspecified'))
+    GENDER_CHOICES = ((0, 'Male'), (1, 'Female'), (2, 'Unspecified'))
     gender = models.IntegerField(choices=GENDER_CHOICES, null=True, blank=True)
-    status = models.TextField(blank=True)
+    status = models.TextField(blank=True, default="Hey there! I am using Makan Mana")
     recent_location_X = models.CharField(max_length=15, blank=True)
     recent_location_Y = models.CharField(max_length=15, blank=True)
     preference = models.ManyToManyField(Preference, blank=True)
@@ -82,12 +88,13 @@ class Profile(models.Model):
     def __str__(self):
         return str(self.user)
 
+
 class FriendList(models.Model):
     """
     FriendList class to list friend(s) of that particular user
     """
-    profile = models.OneToOneField(Profile, on_delete=models.DO_NOTHING, related_name="This_user", null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="This_user", null=True)
     friend_list = models.ManyToManyField(Profile, blank=True)
-    def __str__(self):
-        return str(self.current_user)
 
+    def __str__(self):
+        return str(self.user)

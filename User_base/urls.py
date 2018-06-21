@@ -8,22 +8,20 @@ urlpatterns = [
     path('logout/', knox_views.LogoutView.as_view(), name='knox_logout'),
     path('logoutall/', knox_views.LogoutAllView.as_view(), name='knox_logoutall'),
 
-    # return an user's details
-    path('user/<pk>', views.UserDetailsView.as_view(), name='user-detail'),
-    # return (one/multiple)user's profile with related name entered
-    path('userlist/', views.UserProfileListView.as_view(), name='user-list'),
-    # create user by "posting" header:token , body: email,password
-    path('usercreate', views.UserCreateView.as_view(), name='user-create'),
-    # create user by "posting" header:token , body: username
-    path('profilecreate/', views.ProfileCreateView.as_view(), name='profile-create'),
-    # return the list of friends of an user and put to change friend list
-    path('friendlist/<pk>', views.FriendListDetailsView.as_view(), name='friend-list-detail'),
-    # put other user profile into friend list
-    path('friendlistcreate/', views.FriendListCreateView.as_view(), name='friend-list-create'),
+    path('user-create/', views.UserCreateView.as_view(), name='user-create'),
+    path('user-list/', views.UserCreateView.as_view(), name='user-list'),
+    path('user-detail/<pk>', views.UserDetailView.as_view(), name='user-detail'),
 
-    # return preference detail
-    path('preference/<pk>', views.PreferenceView.as_view(), name='preference-detail'),
+    path('profile-create/', views.ProfileCreateView.as_view(), name='profile-create'),
+    path('profile-list/', views.ProfileListView.as_view(), name='profile-list'),
+    path('profile-detail/<pk>', views.ProfileDetailView.as_view(), name='profile-detail'),
+
+    path('friend-create/', views.FriendCreateView.as_view(), name='friend-create'),
+    path('friend-list/', views.FriendListView.as_view(), name='friend-list'),
+    path('friend-detail/<pk>', views.FriendDetailView.as_view(), name='friend-detail'),
+
+    path('preference-create/', views.PreferenceCreateView.as_view(), name='preference-create'),
+    path('preference-list/', views.PreferenceListView.as_view(), name='preference-list'),
+    path('preference-detail/<pk>', views.PreferenceDetailView.as_view(), name='preference-detail'),
 
 ]
-
-

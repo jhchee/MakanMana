@@ -1,27 +1,7 @@
 from rest_framework import serializers
 from .models import *
-from rest_auth.serializers import UserDetailsSerializer
 from django.contrib.auth import authenticate
 from django.utils.translation import ugettext as _
-
-
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = '__all__'
-
-
-
-class ProfileSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Profile
-        fields = '__all__'
-
-
-class FriendListSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = FriendList
-        fields = '__all__'
 
 
 class AuthTokenSerializer(serializers.Serializer):
@@ -54,9 +34,62 @@ class AuthTokenSerializer(serializers.Serializer):
         attrs['user'] = authenticate(email=email, password=password)
         return attrs
 
+
 class CustomKnoxSerializers(serializers.ModelSerializer):
     class Meta:
         model = User
+        fields = '__all__'
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'
+
+
+class ProfileListSerializer(serializers.ModelSerializer):
+    preference = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='tag',
+    )
+    user = serializers.SlugRelatedField(
+        many=False,
+        read_only=True,
+        slug_field='email'
+    )
+
+    class Meta:
+        model = Profile
+        fields = '__all__'
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = '__all__'
+        # depth = 1
+
+
+class FriendListSerializer(serializers.ModelSerializer):
+    friend_list = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='username',
+    )
+    user = serializers.SlugRelatedField(
+        many=False,
+        read_only=True,
+        slug_field='email',
+    )
+
+    class Meta:
+        model = FriendList
+        fields = '__all__'
+
+class FriendSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FriendList
         fields = '__all__'
 
 class PreferenceSerializers(serializers.ModelSerializer):
