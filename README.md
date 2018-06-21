@@ -1,2 +1,2 @@
-Makan Mana
-An app to help you decide where to eat.
+Makan Mana,
+an app to help you decide where to eat.
