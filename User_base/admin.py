@@ -1,11 +1,18 @@
 from django.contrib import admin, auth
 from .models import *
 
+
 class FriendAdmin(admin.ModelAdmin):
+    list_display = ('user', 'get_friend_list',)
     filter_horizontal = ('friend_list',)
+
+    def get_friend_list(self, obj):
+        return "\n-\n".join([str(f.user) for f in obj.friend_list.all()])
+
 
 class CustomUserAdmin(admin.ModelAdmin):
     list_display = ['email']
+
 
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ['user', 'username']
