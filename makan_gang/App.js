@@ -24,6 +24,17 @@ import RestaurantList from './Components/RestaurantList.js'
 
 import {createStackNavigator} from 'react-navigation'
 
+class RestaurantMarker extends React.Component {
+render(){
+  return(
+    <MapView.Marker
+       coordinate={{"latitude":this.props.lat,"longitude":this.props.long}}
+       title={this.props.name}
+     />
+
+  )
+}
+}
 
 class MapHome extends React.Component {
 
@@ -34,38 +45,40 @@ class MapHome extends React.Component {
       long: null,
       restaurant_data : [] ,
       restaurant_distance : [] ,
+      marker : false ,
+      marker_data : [{name:'' , lat:null , long:null}] ,
     }
 
   }
 
   componentDidMount() {
-      console.log('mounted')
+    console.log('mounted')
 
-      navigator.geolocation.getCurrentPosition(
+    navigator.geolocation.getCurrentPosition(
 
-         (position) => {
+       (position) => {
 
-           console.log("wokeeey");
+         console.log("wokeeey");
 
-           console.log(position);
+         console.log(position);
 
-           this.setState({
+         this.setState({
 
-             lat: position.coords.latitude,
+           lat: position.coords.latitude,
 
-             long: position.coords.longitude,
+           long: position.coords.longitude,
 
-             error: null,
+           error: null,
 
-           });
+         });
 
-         },
+       },
 
-         (error) => this.setState({ error: error.message }),
+       (error) => this.setState({ error: error.message }),
 
-         { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 },
+       { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 },
 
-       );
+     );
 
      }
 
@@ -114,17 +127,43 @@ class MapHome extends React.Component {
        )
      }
 
+     showRestaurantMarker = (lat , long , name) => {
+       console.log('showRestaurantMarker' ,this.state.marker)
+       return(
+
+       this.state.marker?
+       this.setState({
+         marker : !this.state.marker ,
+         marker_data : [{lat:lat , long:long , name:name}],
+       })
+       : this.setState({
+         marker: !this.state.marker ,
+         marker_data: [{lat:lat , long:long , name:name}]
+       })
+     )
+     }
+
+     componentDidUpdate(prevProps , prevState){
+       if(prevState.marker_data[0].name !== this.state.marker_data[0].name){
+         this.setState({
+          marker: true,
+         })
+       }
+     }
+
+
+
   render() {
     return (
       <View style={{flex:1 }}>
      { this.state.lat && this.state.long &&
        <MapView
-        style={{ flex: 1/2 }}
+        style={{ flex: 3 }}
         initialRegion={{
           latitude: this.state.lat ,
           longitude: this.state.long ,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
+          latitudeDelta: 0.00922,
+          longitudeDelta: 0.00621,
         }}>
 
               {!!this.state.lat && !!this.state.long && <MapView.Marker
@@ -134,20 +173,28 @@ class MapHome extends React.Component {
                  title={"Your Location"}
 
                />}
+
+               {this.state.marker? <RestaurantMarker lat = {this.state.marker_data[0].lat} long = {this.state.marker_data[0].long} name = {this.state.marker_data[0].name}/> : null}
+
         </MapView>
+
       }
+      {console.log('does this exist' , this.state.marker_data)}
+      {/* {this.state.marker? <RestaurantMarker lat = {this.state.marker_data[0].lat} long = {this.state.marker_data[0].long} name = {this.state.marker_data[0].name}/> : null} */}
 
 
-        <MapView.Callout>
-            <Button  style = {{marginTop:Constants.statusBarHeight}} onPress={this.fetchData}>
-              <Text>Show Restaurant</Text>
-            </Button>
-        </MapView.Callout>
+      <MapView.Callout>
+          <Button  style = {{marginTop:Constants.statusBarHeight}} onPress={this.fetchData}>
+            <Text>Show Restaurant</Text>
+          </Button>
+      </MapView.Callout>
 
-      {(this.state.restaurant_distance.length===this.state.restaurant_data.length)?
-        <RestaurantList restaurant_data = {this.state.restaurant_data} restaurant_distance = {this.state.restaurant_distance} button={this.props.navigation.navigate}/>
-        : <View><Text>Error loading nearby restaurant list</Text></View>
-      }
+      <View style={{flex:2}}>
+        {(this.state.restaurant_distance.length===this.state.restaurant_data.length)?
+          <RestaurantList restaurant_data = {this.state.restaurant_data} restaurant_distance = {this.state.restaurant_distance} detailsButton={this.props.navigation.navigate} markerButton={this.showRestaurantMarker}/>
+          : <View><Text>Error loading nearby restaurant list</Text></View>
+        }
+     </View>
     </View>
     )
   }
@@ -156,7 +203,8 @@ class MapHome extends React.Component {
 
 
 const RootStack = createStackNavigator({
-    Map : { screen: MapHome} ,
+    Map : { screen: MapHome ,
+            navigationOptions : {header:null,}} ,
     Details : { screen: Details} ,
 
 }
