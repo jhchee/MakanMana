@@ -15,7 +15,7 @@ class MyProfile extends React.Component {
         name="ios-menu"
         type="ionicon"
         style={{ paddingLeft: 10 }}
-        onPress={() => navigation.drawerOpen()}
+        // onPress={() => navigation.drawerOpen()}
       />
     ),
     drawerLabel: "Profile",

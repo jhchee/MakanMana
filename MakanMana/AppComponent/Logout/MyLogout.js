@@ -14,13 +14,13 @@ class MyLogout extends React.Component {
         navigate={navigation.navigate}
         name="ios-menu"
         type="ionicon"
-        style={{ paddingLeft: 10 }}
+        style={{ padding: 10 }}
         onPress={() => navigation.drawerOpen()}
       />
     ),
     drawerLabel: "Logout",
     drawerIcon: ({ tintColor }) => (
-      <Icon name="logout" type="material-community" />
+      <Icon name="logout" type="material-community" size={19} />
     )
   });
 

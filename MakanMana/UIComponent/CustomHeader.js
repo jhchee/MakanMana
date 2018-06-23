@@ -13,12 +13,12 @@ class CustomHeader extends React.Component {
             name="ios-menu"
             type="ionicon"
             onPress={() => this.props.drawerOpen()}
-            size={28}
-            color="white"
+            size={34}
+            color="orange"
           />
         </Left>
         <Body>
-          <Title>{this.props.title}</Title>
+          <Title style={styles.title}>{this.props.title}</Title>
         </Body>
         <Right />
       </Header>
@@ -28,7 +28,10 @@ class CustomHeader extends React.Component {
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: "orange"
+    backgroundColor: "white"
+  },
+  title: {
+    color: "orange"
   }
 });
 export default CustomHeader;
