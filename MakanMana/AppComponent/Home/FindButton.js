@@ -8,7 +8,6 @@ import {
   TouchableOpacity
 } from "react-native";
 import { Icon } from "react-native-elements";
-import { Container, Header, Content, Left } from "native-base";
 
 class FindButton extends React.Component {
   constructor(props) {
@@ -19,8 +18,9 @@ class FindButton extends React.Component {
     return (
       <View
         style={{
-          flex: 1,
-          alignItems: "center"
+          alignItems: "center",
+          margin: 0,
+          padding: 0
         }}
       >
         <TouchableOpacity style={styles.circledbutton}>

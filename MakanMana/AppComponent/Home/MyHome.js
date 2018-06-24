@@ -10,7 +10,6 @@ import {
   Dimensions
 } from "react-native";
 import { Constants } from "expo";
-import { Container } from "native-base";
 import CustomHeader from "../../UIComponent/CustomHeader";
 import { Icon } from "react-native-elements";
 
@@ -36,38 +35,58 @@ class MyHome extends React.Component {
 
   render() {
     return (
-      <Container style={styles.container}>
+      <View style={styles.container}>
         <CustomHeader
           title="Home"
           drawerOpen={() => {
             this.props.navigation.openDrawer();
           }}
         />
-        <View style={{ marginTop: 20, marginRight: 10, position: "relative" }}>
-          <View style={{ alignItems: "flex-end" }}>
-            <TouchableOpacity>
-              <Icon
-                name="eyedropper"
-                type="material-community"
-                color="orange"
-                size={28}
-              />
-            </TouchableOpacity>
-          </View>
-          <FindButton />
+        <View
+          style={{
+            alignItems: "flex-end",
+            margin: 0,
+            marginRight: 20,
+            padding: 0
+          }}
+        >
+          <TouchableOpacity>
+            <Icon
+              name="eyedropper"
+              type="material-community"
+              color="orange"
+              size={28}
+            />
+          </TouchableOpacity>
         </View>
-        <View style={{ marginTop: height / 3 - 10, marginLeft: 10 }}>
+
+        <FindButton />
+        <View
+          style={{
+            backgroundColor: "orange",
+            marginTop: 20,
+            flex: 1
+          }}
+        >
           <Text
-            style={[styles.orangeText, { fontSize: 20, fontWeight: "bold" }]}
+            style={{
+              color: "white",
+              fontSize: 20,
+              fontWeight: "bold",
+              margin: 10
+            }}
           >
             RECENT VIEW
           </Text>
-
           <ScrollView>
+            <RecentView />
+            <RecentView />
+            <RecentView />
+            <RecentView />
             <RecentView />
           </ScrollView>
         </View>
-      </Container>
+      </View>
     );
   }
 }
