@@ -6,8 +6,7 @@ import {
   View,
   Image,
   ScrollView,
-  TouchableOpacity,
-  Dimensions
+  TouchableOpacity
 } from "react-native";
 import { Constants } from "expo";
 import CustomHeader from "../../UIComponent/CustomHeader";
@@ -15,7 +14,6 @@ import { Icon } from "react-native-elements";
 
 import FindButton from "./FindButton";
 import RecentView from "./RecentView";
-const height = Dimensions.get("window").height;
 
 class MyHome extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -42,14 +40,7 @@ class MyHome extends React.Component {
             this.props.navigation.openDrawer();
           }}
         />
-        <View
-          style={{
-            alignItems: "flex-end",
-            margin: 0,
-            marginRight: 20,
-            padding: 0
-          }}
-        >
+        <View style={styles.dropper}>
           <TouchableOpacity>
             <Icon
               name="eyedropper"
@@ -61,24 +52,11 @@ class MyHome extends React.Component {
         </View>
 
         <FindButton />
-        <View
-          style={{
-            backgroundColor: "orange",
-            marginTop: 20,
-            flex: 1
-          }}
-        >
-          <Text
-            style={{
-              color: "white",
-              fontSize: 20,
-              fontWeight: "bold",
-              margin: 10
-            }}
-          >
-            RECENT VIEW
-          </Text>
+        <View style={styles.recentViewBox}>
+          <Text style={styles.recentViewTitle}>RECENT VIEW</Text>
           <ScrollView>
+            <RecentView />
+            <RecentView />
             <RecentView />
             <RecentView />
             <RecentView />
@@ -96,9 +74,26 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     paddingTop: Constants.statusBarHeight
   },
+  dropper: {
+    margin: 0,
+    marginRight: 20,
+    padding: 0,
+    alignItems: "flex-end"
+  },
   icon: {
     height: 24,
     width: 24
+  },
+  recentViewBox: {
+    backgroundColor: "orange",
+    marginTop: 20,
+    flex: 1
+  },
+  recentViewTitle: {
+    color: "white",
+    fontSize: 20,
+    fontWeight: "bold",
+    margin: 10
   },
   orangeText: {
     color: "orange"

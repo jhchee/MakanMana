@@ -12,42 +12,55 @@ import { Icon } from "react-native-elements";
 class RecentView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      name: "NAME",
+      address: "ADDRESS"
+    };
   }
   render() {
     return (
-      <View style={{ marginTop: 10, marginLeft: 10, marginRight: 10 }}>
+      <View style={styles.detailBox}>
         <TouchableOpacity>
-          <View style={{ flexDirection: "row" }}>
+          <View style={styles.details}>
             <Icon name="location-pin" type="entypo" color="white" size={35} />
             <View style={{ marginRight: 10 }}>
-              <Text style={styles.title}>
-                Name{"\n"}
-                <Text style={styles.address}>
-                  No19,Jalan Puteri Park 9, Taman Gaya 8, 81800, Ulu Tiram,
-                  Johor Darul Takzim
-                </Text>
+              <Text style={styles.placeName}>
+                {this.state.name} {"\n"}
+                <Text style={styles.placeAddress}>{this.state.address}</Text>
               </Text>
             </View>
           </View>
         </TouchableOpacity>
-        <View style={{ marginTop: 20, height: 1, backgroundColor: "white" }} />
+        <View style={styles.breakLine} />
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  title: {
+  detailBox: {
+    marginTop: 10,
+    marginLeft: 10,
+    marginRight: 10
+  },
+  details: {
+    flexDirection: "row"
+  },
+  placeName: {
     color: "white",
     fontSize: 18,
     fontWeight: "bold",
     marginLeft: 20,
     marginRight: 10
   },
-  address: {
+  placeAddress: {
     color: "white",
     fontSize: 15
+  },
+  breakLine: {
+    marginTop: 20,
+    height: 1,
+    backgroundColor: "white"
   }
 });
 
