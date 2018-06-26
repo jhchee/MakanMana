@@ -72,7 +72,12 @@ export const MyMain = createDrawerNavigator(
       screen: MyRoom
     },
     Profile: {
-      screen: MyProfile
+      screen: MyProfile,
+      navigationOptions: ({ navigation }) => ({
+        title: "Profile",
+        drawerLabel: "Profile",
+        drawerIcon: ({ tintColor }) => <Icon name="ios-person" type="ionicon" />
+      })
     },
     Logout: {
       screen: MyLogout

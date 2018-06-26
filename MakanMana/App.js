@@ -2,6 +2,7 @@
 import React from "react";
 // import app components
 import Main from "./Main"; // MAIN APP
+import Profile from "./AppComponent/Profile/MyProfile";
 // extra components
 import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
 import Expo from "expo";
