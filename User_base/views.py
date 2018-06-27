@@ -145,11 +145,3 @@ class PreferenceDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = {
         permissions.IsAuthenticatedOrReadOnly,
     }
-
-
-class RelationshipListView(generics.ListCreateAPIView):
-    queryset = Relationship.objects.all()
-    serializer_class = serializers.RelationshipListSerializers
-    permission_classes = {
-        permissions.IsAuthenticatedOrReadOnly,
-    }
