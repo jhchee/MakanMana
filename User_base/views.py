@@ -21,22 +21,15 @@ class UserCreateView(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = serializers.UserSerializer
     permission_classes = {
-        permissions.IsAuthenticatedOrReadOnly,
+        permissions.IsAdminUser,
     }
-
-    def get_queryset(self):
-        queryset = User.objects.all()
-        email = self.request.query_params.get('email', None)
-        if email is not None:
-            queryset = queryset.filter(email__icontains=email)
-        return queryset
 
 
 class UserListView(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = serializers.UserSerializer
     permission_classes = {
-        permissions.IsAuthenticatedOrReadOnly,
+        permissions.IsAdminUser,
     }
 
     def get_queryset(self):
@@ -51,7 +44,7 @@ class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = serializers.UserSerializer
     permission_classes = {
-        permissions.IsAuthenticatedOrReadOnly,
+        permissions.IsAdminUser,
     }
 
 
@@ -74,20 +67,36 @@ class ProfileListView(generics.ListCreateAPIView):
     # ordering = ('-username',)
     def get_queryset(self):
         queryset = Profile.objects.all()
-        username = self.request.query_params.get('username', None)
+        name = self.request.query_params.get('name', None)
         email = self.request.query_params.get('email', None)
-        if username is not None:
-            queryset = queryset.filter(username__icontains=username)
+        if name is not None:
+            queryset = queryset.filter(profile_name__icontains=name)
         if email is not None:
             queryset = queryset.filter(user__email__icontains=email)
         return queryset
+
+
+class IsOwnerOrReadOnly(permissions.BasePermission):
+    """
+    Object-level permission to only allow owners of an object to edit it.
+    Assumes the model instance has an `owner` attribute.
+    """
+
+    def has_object_permission(self, request, view, obj):
+        # Read permissions are allowed to any request,
+        # so we'll always allow GET, HEAD or OPTIONS requests.
+        if request.method in permissions.SAFE_METHODS:
+            return True
+
+        # Instance must have an attribute named `owner`.
+        return obj.user == request.user
 
 
 class ProfileDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Profile.objects.all()
     serializer_class = serializers.ProfileSerializer
     permission_classes = {
-        permissions.IsAuthenticatedOrReadOnly,
+        IsOwnerOrReadOnly,
     }
 
 
@@ -141,6 +150,13 @@ class PreferenceListView(generics.ListCreateAPIView):
 class PreferenceDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Preference.objects.all()
     serializer_class = serializers.PreferenceSerializers
+    permission_classes = {
+        permissions.IsAuthenticatedOrReadOnly,
+    }
+
+class RelationshipListView(generics.ListCreateAPIView):
+    queryset = Relationship.objects.all()
+    serializer_class = serializers.RelationshipListSerializers
     permission_classes = {
         permissions.IsAuthenticatedOrReadOnly,
     }

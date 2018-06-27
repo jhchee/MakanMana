@@ -13,15 +13,18 @@ class FriendAdmin(admin.ModelAdmin):
 class CustomUserAdmin(admin.ModelAdmin):
     list_display = ['email']
 
+class RelationshipAdmin(admin.ModelAdmin):
+    list_display = ['user', 'people',]
 
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ['user', 'username']
+    list_display = ['user', 'profile_name']
     filter_horizontal = ('preference',)
-    search_fields = ['username', 'user__email']
+    search_fields = ['profile_name', 'user__email']
     list_filter = ['preference']
 
 
 admin.site.register(Preference)
+admin.site.register(Relationship, RelationshipAdmin)
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(FriendList, FriendAdmin)

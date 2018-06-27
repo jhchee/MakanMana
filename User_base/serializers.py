@@ -27,7 +27,7 @@ class AuthTokenSerializer(serializers.Serializer):
                 msg = _('Unable to log in with provided credentials.')
                 raise serializers.ValidationError(msg, code='authorization')
         else:
-            msg = _('Must include "username" and "password".')
+            msg = _('Must include "email" and "password".')
             raise serializers.ValidationError(msg, code='authorization')
 
         attrs['email'] = email
@@ -46,8 +46,17 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = '__all__'
 
+    def create(self, validated_data):
+        email = validated_data['email']
+        password = validated_data['password']
+        user_obj = User(email=email)
+        user_obj.set_password(password)
+        user_obj.save()
+        return validated_data
+
 
 class ProfileListSerializer(serializers.ModelSerializer):
+    gender = serializers.CharField(source='get_gender_display')
     preference = serializers.SlugRelatedField(
         many=True,
         read_only=True,
@@ -65,6 +74,7 @@ class ProfileListSerializer(serializers.ModelSerializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
+    # gender = serializers.CharField(source='get_gender_display')
     class Meta:
         model = Profile
         fields = '__all__'
@@ -75,7 +85,7 @@ class FriendListSerializer(serializers.ModelSerializer):
     friend_list = serializers.SlugRelatedField(
         many=True,
         read_only=True,
-        slug_field='username',
+        slug_field='profile_name',
     )
     user = serializers.SlugRelatedField(
         many=False,
@@ -87,12 +97,19 @@ class FriendListSerializer(serializers.ModelSerializer):
         model = FriendList
         fields = '__all__'
 
+
 class FriendSerializer(serializers.ModelSerializer):
     class Meta:
         model = FriendList
         fields = '__all__'
 
+
 class PreferenceSerializers(serializers.ModelSerializer):
     class Meta:
         model = Preference
+        fields = '__all__'
+
+class RelationshipListSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Relationship
         fields = '__all__'

@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
@@ -26,7 +25,6 @@ SECRET_KEY = 'tvw8@*tpkn5n!x6k^z)4z0_(b^6%j$i0jz)=5-8#ku3=c&2e#v'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -42,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'knox',
     'django_filters',
+    'drf_yasg',
 ]
 
 REST_FRAMEWORK = {
@@ -56,7 +55,9 @@ REST_KNOX = {
     'USER_SERIALIZER': 'User_base.serializers.CustomKnoxSerializers',
     'TOKEN_TTL': None,
 }
-
+SWAGGER_SETTINGS = {
+    'VALIDATOR_URL': 'http://localhost:8000',
+}
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -88,7 +89,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Makan_mana.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
@@ -98,7 +98,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -117,8 +116,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
@@ -132,7 +129,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
@@ -140,4 +136,4 @@ STATIC_URL = '/static/'
 AUTH_USER_MODEL = "User_base.User"
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-ALLOWED_HOSTS = ['*',]
+ALLOWED_HOSTS = ['*', ]

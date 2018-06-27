@@ -4,7 +4,6 @@ import os
 import shortuuid
 from django.utils.translation import ugettext_lazy as _
 
-
 class MyUserManager(BaseUserManager):
     def _create_user(self, email, password, **extra_fields):
         """
@@ -62,7 +61,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         filename = "%s.%s" % (shortuuid.uuid(), ext)
         return os.path.join('user_uploads/', filename)
 
-
 class Preference(models.Model):
     tag = models.CharField(max_length=20, blank=True, null=True)
 
@@ -75,10 +73,10 @@ class Profile(models.Model):
     Profile class to display user info
     """
     user = models.OneToOneField(User, blank=False, null=True, on_delete=models.CASCADE)
-    username = models.CharField(blank=False, null=True, max_length=20)
+    profile_name = models.CharField(blank=False, null=True, max_length=20)
     profile_pic = models.ImageField(upload_to=User.get_file_path, null=True, blank=True)
     age = models.IntegerField(null=True, blank=True)
-    GENDER_CHOICES = ((0, 'Male'), (1, 'Female'), (2, 'Unspecified'))
+    GENDER_CHOICES = [(0, 'Male'), (1, 'Female'), (2, 'Unspecified')]
     gender = models.IntegerField(choices=GENDER_CHOICES, null=True, blank=True)
     status = models.TextField(blank=True, default="Hey there! I am using Makan Mana")
     recent_location_X = models.CharField(max_length=15, blank=True)
@@ -95,6 +93,16 @@ class FriendList(models.Model):
     """
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="This_user", null=True)
     friend_list = models.ManyToManyField(Profile, blank=True)
+
+    def __str__(self):
+        return str(self.user)
+
+
+class Relationship(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    people = models.OneToOneField(a, on_delete=models.CASCADE, related_name="target", null=True)
+    LABEL = ((0, 'NotFriend'), (1, 'Friend'), (2, 'Self'))
+    relationship_label = models.IntegerField(choices=LABEL, default=0)
 
     def __str__(self):
         return str(self.user)
