@@ -96,13 +96,3 @@ class FriendList(models.Model):
 
     def __str__(self):
         return str(self.user)
-
-
-class Relationship(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    people = models.OneToOneField(a, on_delete=models.CASCADE, related_name="target", null=True)
-    LABEL = ((0, 'NotFriend'), (1, 'Friend'), (2, 'Self'))
-    relationship_label = models.IntegerField(choices=LABEL, default=0)
-
-    def __str__(self):
-        return str(self.user)

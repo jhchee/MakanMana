@@ -108,8 +108,3 @@ class PreferenceSerializers(serializers.ModelSerializer):
     class Meta:
         model = Preference
         fields = '__all__'
-
-class RelationshipListSerializers(serializers.ModelSerializer):
-    class Meta:
-        model = Relationship
-        fields = '__all__'

@@ -13,8 +13,10 @@ class FriendAdmin(admin.ModelAdmin):
 class CustomUserAdmin(admin.ModelAdmin):
     list_display = ['email']
 
+
 class RelationshipAdmin(admin.ModelAdmin):
-    list_display = ['user', 'people',]
+    list_display = ['user', 'people', ]
+
 
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ['user', 'profile_name']
@@ -24,7 +26,6 @@ class ProfileAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Preference)
-admin.site.register(Relationship, RelationshipAdmin)
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(FriendList, FriendAdmin)
