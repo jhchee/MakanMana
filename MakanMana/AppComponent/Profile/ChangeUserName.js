@@ -1,6 +1,15 @@
 import React from "react";
 
-import { StyleSheet, Text, View, Image, Button, TextInput } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Button,
+  TextInput,
+  TouchableOpacity,
+  Dimensions
+} from "react-native";
 import { Constants } from "expo";
 import { createStackNavigator } from "react-navigation";
 
@@ -8,27 +17,72 @@ class ChangeUserName extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: ""
+      username: "chee"
     };
   }
+  _goBack = () => {
+    this.props.navigation.goBack(null);
+  };
+
   _updateUserName = () => {
-    fetch("https://mywebsite.com/endpoint/", {
+    const ELMLAB = "http://192.168.31.60:8000/user_base/profile/detail/";
+    const HOSTEL = "http://172.17.6.127:8000/user_base/profile/detail/";
+    const CORE = "http://10.163.26.52:19000/user_base/profile/detail/";
+    const profile_id = "1";
+    const token = "Token ".concat(
+      "966b2172505684bb4630ba62feea43531e173ec9523daf0b019728a671d27e51"
+    );
+    var ENDPOINT = HOSTEL.concat(profile_id);
+    fetch(ENDPOINT, {
       method: "PUT",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        token: "Authentication "
+        Authorization: token
       },
       body: JSON.stringify({
-        firstParam: "yourValue",
         profile_name: this.state.username
       })
     });
+    this._goBack();
   };
+
   render() {
     return (
       <View style={styles.container}>
-        <Text>ChangeUserName</Text>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>Enter your name</Text>
+        </View>
+        <View style={{ flex: 1 }}>
+          <TextInput
+            value={this.state.username}
+            underlineColorAndroid="#ff8000"
+            onChangeText={value => this.setState({ username: value })}
+            selectTextOnFocus={true}
+            maxLength={20}
+            style={styles.inputField}
+          />
+        </View>
+        {/* <View sytle={styles.buttonContainer}>
+          <View>
+            <TouchableOpacity
+              style={styles.navigateButton}
+              onPress={this._goBack}
+            >
+              <Text>CANCEL</Text>
+            </TouchableOpacity>
+          </View>
+          <View>
+            <TouchableOpacity
+              style={styles.navigateButton}
+              onPress={this._updateUserName}
+            >
+              <Text>CHANGE</Text>
+            </TouchableOpacity>
+          </View>
+        </View> */}
+        <Button title="CANCEL" onPress={this._goBack} />
+        <Button title="CHANGE" onPress={this._updateUserName} />
       </View>
     );
   }
@@ -38,6 +92,38 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
     paddingTop: Constants.statusBarHeight
+  },
+  header: {
+    height: 60,
+    backgroundColor: "orange",
+    justifyContent: "center"
+  },
+  headerText: {
+    color: "white",
+    fontSize: 20,
+    margin: 10
+  },
+  inputField: {
+    // color: "orange",
+    fontSize: 18,
+    height: 50,
+    justifyContent: "center",
+    marginLeft: 20,
+    marginRight: 20,
+    paddingLeft: 10
+  },
+  buttonContainer: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    height: 20,
+    width: 20
+  },
+  navigateButton: {
+    flex: 1,
+    backgroundColor: "black",
+    height: 20,
+    width: 20
   }
 });
 

@@ -21,26 +21,21 @@ class MyProfile extends React.Component {
     super(props);
     this.state = {
       user_name: "",
-      user_picture: "https://dummyimage.com/500x500/000/f1f1f1.png&text=+",
+      user_picture: "",
       user_age: "",
       user_gender: "",
       user_status: ""
     };
   }
 
-  static navigationOptions = ({ navigation }) => ({
-    title: "Profile",
-    drawerLabel: "Profile",
-    drawerIcon: ({ tintColor }) => <Icon name="ios-person" type="ionicon" />
-  });
-
   restAPI = () => {
-    const ELMLAB = "http://192.168.31.60:8000";
-    const HOSTEL = "http://172.17.6.127:8000";
-    const ELMLAB2 = "http://10.10.0.155:8000";
-    var ENDPOINT = ELMLAB.concat(
-      "/user_base/profile-list/?email=chee@gmail.com"
-    );
+    const ELMLAB = "http://192.168.31.60:8000/user_base/profile/list/?email=";
+    const HOSTEL = "http://172.17.6.127:8000/user_base/profile/list/?email=";
+    // const CORE = "http://10.163.26.52:19000/user_base/profile/list/?email=";
+    const CORE = "http://192.168.137.1:8000/user_base/profile/list/?email=";
+    const email = "chee@gmail.com";
+    var ENDPOINT = CORE.concat(email);
+
     fetch(ENDPOINT)
       .then(function(response) {
         return response.json();
@@ -93,6 +88,7 @@ class MyProfile extends React.Component {
           title="Profile"
           drawerOpen={() => this.props.navigation.openDrawer()}
         />
+
         <View style={styles.centered}>
           <TouchableOpacity onPress={this._ManipulatePicture}>
             <Image
@@ -123,6 +119,7 @@ class MyProfile extends React.Component {
             </View>
           </View>
         ) : null}
+
         {this.state.user_gender ? (
           <View style={styles.textBox}>
             <View style={styles.fieldIndicator}>

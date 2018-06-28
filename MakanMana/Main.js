@@ -9,12 +9,7 @@ import MyLogout from "./AppComponent/Logout/MyLogout";
 // extra components
 import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
 import { Constants } from "expo";
-import {
-  createDrawerNavigator,
-  StackNavigator,
-  DrawerItems,
-  SafeAreaView
-} from "react-navigation";
+import { createDrawerNavigator, DrawerItems } from "react-navigation";
 import { Container, Content, Header, Body } from "native-base";
 import Expo from "expo";
 import { Avatar, Icon } from "react-native-elements";
@@ -66,7 +61,12 @@ export const MyMain = createDrawerNavigator(
       screen: MyHome
     },
     Friend: {
-      screen: MyFriend
+      screen: MyFriend,
+      navigationOptions: ({ navigation }) => ({
+        title: "Friend",
+        drawerLabel: "Friend",
+        drawerIcon: ({ tintColor }) => <Icon name="ios-people" type="ionicon" />
+      })
     },
     Room: {
       screen: MyRoom
