@@ -8,7 +8,9 @@ import {
   TouchableOpacity
 } from "react-native";
 import { Icon } from "react-native-elements";
+import { inject, observer } from "mobx-react";
 
+@inject('store') @observer
 class FriendBar extends React.Component {
   constructor(props) {
     super(props);

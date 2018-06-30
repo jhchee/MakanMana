@@ -10,6 +10,9 @@ import FriendBar from "./FriendBar";
 import FriendSearchResult from "./FriendSearchResult";
 import { createStackNavigator } from "react-navigation";
 
+import { Provider } from "mobx-react";
+import mobxstores from "../../mobxstores";
+
 class MyFriend extends React.Component {
   constructor(props) {
     super(props);
@@ -48,48 +51,50 @@ class MyFriend extends React.Component {
   };
   render() {
     return (
-      <Container style={styles.container}>
-        <CustomHeader
-          title="Friend"
-          drawerOpen={() => {
-            this.props.navigation.openDrawer();
-          }}
-        />
-        <View style={styles.searchBar}>
-          <SearchBar
-            lightTheme
-            showLoading={true}
-            searchIcon={false}
-            inputStyle={{ backgroundColor: "white" }}
-            containerStyle={{
-              backgroundColor: "white"
-            }}
-            cancelIcon={{ name: "cancel" }}
-            clearIcon={{
-              color: "#999",
-              name: "cancel"
-            }}
-            placeholder="Search username"
-            onChangeText={searchInput => this.setState({ searchInput })}
-            ref={search => (this.search = search)}
-            onSubmitEditing={() => {
-              this._searchPerson(this.state.searchInput);
+      <Provider {...mobxstores}>
+        <Container style={styles.container}>
+          <CustomHeader
+            title="Friend"
+            drawerOpen={() => {
+              this.props.navigation.openDrawer();
             }}
           />
-        </View>
-        <ScrollView>
-          {this.state.friendList.map((ele, index) => {
-            return (
-              <FriendBar
-                friendInfo={ele}
-                key={index}
-                _detailPage={this._detailPage}
-                isFriend={1}
-              />
-            );
-          })}
-        </ScrollView>
-      </Container>
+          <View style={styles.searchBar}>
+            <SearchBar
+              lightTheme
+              showLoading={true}
+              searchIcon={false}
+              inputStyle={{ backgroundColor: "white" }}
+              containerStyle={{
+                backgroundColor: "white"
+              }}
+              cancelIcon={{ name: "cancel" }}
+              clearIcon={{
+                color: "#999",
+                name: "cancel"
+              }}
+              placeholder="Search username"
+              onChangeText={searchInput => this.setState({ searchInput })}
+              ref={search => (this.search = search)}
+              onSubmitEditing={() => {
+                this._searchPerson(this.state.searchInput);
+              }}
+            />
+          </View>
+          <ScrollView>
+            {this.state.friendList.map((ele, index) => {
+              return (
+                <FriendBar
+                  friendInfo={ele}
+                  key={index}
+                  _detailPage={this._detailPage}
+                  isFriend={1}
+                />
+              );
+            })}
+          </ScrollView>
+        </Container>
+      </Provider>
     );
   }
 }
@@ -107,6 +112,7 @@ const styles = StyleSheet.create({
     marginTop: 10
   }
 });
+
 export default (MyFriend = createStackNavigator(
   {
     FriendMenu: {

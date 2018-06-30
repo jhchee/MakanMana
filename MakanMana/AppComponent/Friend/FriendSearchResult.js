@@ -13,6 +13,9 @@ import FriendDetail from "./FriendDetail";
 import { Constants } from "expo";
 import { createStackNavigator } from "react-navigation";
 
+import { Provider } from "mobx-react";
+import mobxstores from "../../mobxstores";
+
 class FriendSearchResult extends React.Component {
   constructor(props) {
     super(props);
@@ -28,11 +31,6 @@ class FriendSearchResult extends React.Component {
   };
   _fetchSearchResult = searchTarget => {
     console.log(searchTarget);
-    const ELMLAB = "http://192.168.31.60:8000/user_base/profile/list/?name=";
-    const HOSTEL = "http://172.17.6.127:8000/user_base/profile/list/?name=";
-    // const CORE = "http://10.163.26.52:19000/user_base/friend/detail/";
-    const CORE = "http://192.168.137.1:8000/user_base/profile/list/?name=";
-    const MAXIS = "http://172.20.10.3:8080/user_base/profile/list/?name=";
     var ENDPOINT = "http://10.0.2.2:8000/user_base/profile/list/?name=".concat(
       searchTarget
     );
@@ -49,25 +47,27 @@ class FriendSearchResult extends React.Component {
   };
   render() {
     return (
-      <View style={styles.container}>
-        <ScrollView>
-          {this.state.searchResultList.length ? (
-            this.state.searchResultList.map((ele, index) => {
-              return (
-                <FriendBar
-                  friendInfo={ele}
-                  key={index}
-                  _detailPage={this._detailPage}
-                />
-              );
-            })
-          ) : (
-            <View style={styles.notFoundMessage}>
-              <Text>User not found :(</Text>
-            </View>
-          )}
-        </ScrollView>
-      </View>
+      <Provider {...mobxstores}>
+        <View style={styles.container}>
+          <ScrollView>
+            {this.state.searchResultList.length ? (
+              this.state.searchResultList.map((ele, index) => {
+                return (
+                  <FriendBar
+                    friendInfo={ele}
+                    key={index}
+                    _detailPage={this._detailPage}
+                  />
+                );
+              })
+            ) : (
+              <View style={styles.notFoundMessage}>
+                <Text>User not found :(</Text>
+              </View>
+            )}
+          </ScrollView>
+        </View>
+      </Provider>
     );
   }
 }
