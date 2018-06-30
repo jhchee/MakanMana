@@ -24,15 +24,15 @@ class FriendDetail extends React.Component {
     const HOSTEL = "http://172.17.6.127:8000/user_base/profile/detail/";
     // const CORE = "http://10.163.26.52:19000/user_base/profile/detail/";
     const CORE = "http://192.168.137.1:8000/user_base/profile/detail/";
-    var ENDPOINT = CORE.concat(profileId);
+    var ENDPOINT = "http://10.0.2.2:8000/user_base/profile/detail/".concat(
+      profileId
+    );
 
     fetch(ENDPOINT)
       .then(function(response) {
         return response.json();
       })
       .then(myJson => {
-        console.log(myJson);
-
         const {
           age,
           gender,

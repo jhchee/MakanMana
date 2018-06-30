@@ -26,7 +26,7 @@ class ChangeUserName extends React.Component {
 
   _updateUserName = () => {
     const ELMLAB = "http://192.168.31.60:8000/user_base/profile/detail/";
-    const HOSTEL = "http://172.17.6.127:8000/user_base/profile/detail/";
+    const HOSTEL = "http://10.0.2.2:8000/user_base/profile/detail/";
     const CORE = "http://10.163.26.52:19000/user_base/profile/detail/";
     const profile_id = "1";
     const token = "Token ".concat(
