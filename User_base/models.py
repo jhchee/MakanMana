@@ -4,6 +4,7 @@ import os
 import shortuuid
 from django.utils.translation import ugettext_lazy as _
 
+
 class MyUserManager(BaseUserManager):
     def _create_user(self, email, password, **extra_fields):
         """
@@ -61,6 +62,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         filename = "%s.%s" % (shortuuid.uuid(), ext)
         return os.path.join('user_uploads/', filename)
 
+
 class Preference(models.Model):
     tag = models.CharField(max_length=20, blank=True, null=True)
 
@@ -72,9 +74,9 @@ class Profile(models.Model):
     """
     Profile class to display user info
     """
-    user = models.OneToOneField(User, blank=False, null=True, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE)
     profile_name = models.CharField(blank=False, null=True, max_length=20)
-    profile_pic = models.ImageField(upload_to=User.get_file_path, null=True, blank=True)
+    profile_pic = models.ImageField(upload_to=User.get_file_path, blank=True, default="dummy.png")
     age = models.IntegerField(null=True, blank=True)
     GENDER_CHOICES = [(0, 'Male'), (1, 'Female'), (2, 'Unspecified')]
     gender = models.IntegerField(choices=GENDER_CHOICES, null=True, blank=True)
@@ -91,7 +93,8 @@ class FriendList(models.Model):
     """
     FriendList class to list friend(s) of that particular user
     """
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="This_user", null=True)
+    # related_name = "This_user",
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     friend_list = models.ManyToManyField(Profile, blank=True)
 
     def __str__(self):

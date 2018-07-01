@@ -9,7 +9,7 @@ urlpatterns = [
     path('auth/logoutall/', knox_views.LogoutAllView.as_view(), name='knox_logoutall'),
 
     path('user/create/', views.UserCreateView.as_view(), name='user-create'),
-    path('user/list/', views.UserCreateView.as_view(), name='user-list'),
+    path('user/list/', views.UserListView.as_view(), name='user-list'),
     path('user/detail/<pk>', views.UserDetailView.as_view(), name='user-detail'),
 
     path('profile/create/', views.ProfileCreateView.as_view(), name='profile-create'),
@@ -18,10 +18,13 @@ urlpatterns = [
 
     path('friend/create/', views.FriendCreateView.as_view(), name='friend-create'),
     path('friend/list/', views.FriendListView.as_view(), name='friend-list'),
-    path('friend/detail/<pk>', views.FriendDetailView.as_view(), name='friend-detail'),
+    path('friend/bar/<pk>', views.FriendBarView.as_view(), name='friend-bar'),
+    path('friend/detail/<pk>', views.FriendListDetailView.as_view(), name='friend-detail'),
 
     path('preference/create/', views.PreferenceCreateView.as_view(), name='preference-create'),
     path('preference/list/', views.PreferenceListView.as_view(), name='preference-list'),
     path('preference/detail/<pk>', views.PreferenceDetailView.as_view(), name='preference-detail'),
 
+
+    #path('friend/bar/')
 ]

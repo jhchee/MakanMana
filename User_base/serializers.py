@@ -19,10 +19,6 @@ class AuthTokenSerializer(serializers.Serializer):
         if email and password:
             user = authenticate(request=self.context.get('request'),
                                 email=email, password=password)
-
-            # The authenticate call simply returns None for is_active=False
-            # users. (Assuming the default ModelBackend authentication
-            # backend.)
             if not user:
                 msg = _('Unable to log in with provided credentials.')
                 raise serializers.ValidationError(msg, code='authorization')
@@ -56,12 +52,14 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ProfileListSerializer(serializers.ModelSerializer):
-    gender = serializers.CharField(source='get_gender_display')
-    preference = serializers.SlugRelatedField(
-        many=True,
-        read_only=True,
-        slug_field='tag',
-    )
+    """
+    Profile serializer with gender field in string form
+    """
+    # preference = serializers.SlugRelatedField(
+    #     many=True,
+    #     read_only=True,
+    #     slug_field='tag',
+    # )
     user = serializers.SlugRelatedField(
         many=False,
         read_only=True,
@@ -70,23 +68,23 @@ class ProfileListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = '__all__'
+        fields = ('profile_name', 'profile_pic', 'status', 'user',)
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    # gender = serializers.CharField(source='get_gender_display')
+    """
+    Generic profile serializer
+    """
+    gender = serializers.CharField(source='get_gender_display')
     class Meta:
         model = Profile
         fields = '__all__'
-        # depth = 1
 
 
 class FriendListSerializer(serializers.ModelSerializer):
-    friend_list = serializers.SlugRelatedField(
-        many=True,
-        read_only=True,
-        slug_field='profile_name',
-    )
+    """
+    Friend serializer with user email for lookup
+    """
     user = serializers.SlugRelatedField(
         many=False,
         read_only=True,
@@ -99,6 +97,31 @@ class FriendListSerializer(serializers.ModelSerializer):
 
 
 class FriendSerializer(serializers.ModelSerializer):
+    """
+    Generic friend serializer
+    """
+
+    class Meta:
+        model = FriendList
+        fields = '__all__'
+
+
+class FriendBarProfileSerializer(serializers.ModelSerializer):
+    """
+    Profile serializer with profile info for friend bar
+    """
+
+    class Meta:
+        model = Profile
+        fields = ('profile_name', 'profile_pic', 'status', 'user')
+
+
+class FriendBarSerializer(serializers.ModelSerializer):
+    """
+    Friend serializer that enables fetching of some of friend's profile info
+    """
+    friend_list = FriendBarProfileSerializer(read_only=True, many=True)
+
     class Meta:
         model = FriendList
         fields = '__all__'
