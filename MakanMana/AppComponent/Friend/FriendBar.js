@@ -1,28 +1,39 @@
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  Image,
-  TouchableOpacity
-} from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { Icon } from "react-native-elements";
-import { inject, observer } from "mobx-react";
+import { observer, inject } from "mobx-react";
 
-@inject('store') @observer
+@inject("store")
+@observer
 class FriendBar extends React.Component {
   constructor(props) {
     super(props);
-    const { profile_name, profile_pic, status, id } = this.props.friendInfo;
+    const { profile_name, profile_pic, status, user } = this.props.friendInfo;
     this.state = {
       profileName: profile_name,
       profilePic: profile_pic,
       userStatus: status,
-      profileId: id
+      profileId: user
     };
   }
 
+  _verifyIsFriend(userId) {
+    // result = this.props.store.friendList.filter(ele => {
+    //   if (ele === userId) {
+    //     return true;
+    //   } else {
+    //     return false;
+    //   }
+    // });
+    // return result.length;
+    const list = this.props.store.friendList;
+    const id = this.state.profileId;
+    for (var i = 0; i < list.length; i++) {
+      if (list[i] === id) return True;
+    }
+    return False;
+  }
+  _addFriend() {}
   render() {
     return (
       <View>
@@ -49,11 +60,13 @@ class FriendBar extends React.Component {
               </View>
             </TouchableOpacity>
           </View>
-          <View style={{ flex: 1, justifyContent: "center" }}>
-            <TouchableOpacity>
-              <Icon name={"plus"} type="entypo" size={30} color="black" />
-            </TouchableOpacity>
-          </View>
+          {this._verifyIsFriend() ? (
+            <View style={{ flex: 1, justifyContent: "center" }}>
+              <TouchableOpacity onPress={this._addFriend}>
+                <Icon name={"plus"} type="entypo" size={30} color="black" />
+              </TouchableOpacity>
+            </View>
+          ) : null}
         </View>
         <View style={styles.breakLine} />
       </View>

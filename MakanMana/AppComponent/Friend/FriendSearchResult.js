@@ -12,16 +12,18 @@ import FriendBar from "./FriendBar";
 import FriendDetail from "./FriendDetail";
 import { Constants } from "expo";
 import { createStackNavigator } from "react-navigation";
-
-import { Provider } from "mobx-react";
+import { Provider, observer } from "mobx-react";
 import mobxstores from "../../mobxstores";
 
+@observer
 class FriendSearchResult extends React.Component {
   constructor(props) {
     super(props);
     this.state = { searchResultList: [] };
   }
   componentDidMount() {
+    mobxstores.store.updateFriendList();
+    console.log(mobxstores.store.friendList);
     const { navigation } = this.props;
     const searchTarget = navigation.getParam("searchTarget");
     this._fetchSearchResult(searchTarget);
@@ -39,10 +41,8 @@ class FriendSearchResult extends React.Component {
       .then(function(response) {
         return response.json();
       })
-      .then(myJson => {
-        console.log(myJson);
-        this.setState({ searchResultList: myJson });
-        // console.log(this.state.searchResultList);
+      .then(jsonResult => {
+        this.setState({ searchResultList: jsonResult });
       });
   };
   render() {
