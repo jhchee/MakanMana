@@ -17,21 +17,13 @@ class FriendBar extends React.Component {
     };
   }
 
-  _verifyIsFriend(userId) {
-    // result = this.props.store.friendList.filter(ele => {
-    //   if (ele === userId) {
-    //     return true;
-    //   } else {
-    //     return false;
-    //   }
-    // });
-    // return result.length;
+  _verifyIsFriend() {
     const list = this.props.store.friendList;
     const id = this.state.profileId;
     for (var i = 0; i < list.length; i++) {
-      if (list[i] === id) return True;
+      if (list[i] === id) return false;
     }
-    return False;
+    return true;
   }
   _addFriend() {}
   render() {

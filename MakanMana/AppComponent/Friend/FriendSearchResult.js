@@ -4,10 +4,7 @@ import {
   Text,
   View,
   ScrollView,
-  Image,
-  TouchableOpacity
 } from "react-native";
-import { Icon } from "react-native-elements";
 import FriendBar from "./FriendBar";
 import FriendDetail from "./FriendDetail";
 import { Constants } from "expo";
