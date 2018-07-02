@@ -56,9 +56,13 @@ const CustomDrawerContentComponent = props => (
 
 export const MyMain = createDrawerNavigator(
   {
-    // For each screen that you can navigate to, create a new entry like this:
     Home: {
-      screen: MyHome
+      screen: MyHome,
+      navigationOptions: ({ navigation }) => ({
+        title: "Home",
+        drawerLabel: "Home",
+        drawerIcon: ({ tintColor }) => <Icon name="ios-home" type="ionicon" />
+      })
     },
     Friend: {
       screen: MyFriend,
@@ -69,7 +73,14 @@ export const MyMain = createDrawerNavigator(
       })
     },
     Room: {
-      screen: MyRoom
+      screen: MyRoom,
+      navigationOptions: ({ navigation }) => ({
+        title: "Room",
+        drawerLabel: "Room",
+        drawerIcon: ({ tintColor }) => (
+          <Icon name="ios-analytics" type="ionicon" />
+        )
+      })
     },
     Profile: {
       screen: MyProfile,
@@ -80,7 +91,14 @@ export const MyMain = createDrawerNavigator(
       })
     },
     Logout: {
-      screen: MyLogout
+      screen: MyLogout,
+      navigationOptions: ({ navigation }) => ({
+        title: "Logout",
+        drawerLabel: "Logout",
+        drawerIcon: ({ tintColor }) => (
+          <Icon name="logout" type="material-community" size={19} />
+        )
+      })
     }
   },
 

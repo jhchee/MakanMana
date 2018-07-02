@@ -7,21 +7,6 @@ import CustomHeader from "../../UIComponent/CustomHeader";
 import { Icon } from "react-native-elements";
 
 class MyRoom extends React.Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: "Room",
-    headerLeft: (
-      <Icon
-        navigate={navigation.navigate}
-        name="ios-menu"
-        type="ionicon"
-        style={{ paddingLeft: 10 }}
-        onPress={() => navigation.drawerOpen()}
-      />
-    ),
-    drawerLabel: "Room",
-    drawerIcon: ({ tintColor }) => <Icon name="ios-analytics" type="ionicon" />
-  });
-
   render() {
     return (
       <Container style={styles.container}>

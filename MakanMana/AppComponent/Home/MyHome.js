@@ -4,7 +4,6 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
   ScrollView,
   TouchableOpacity
 } from "react-native";
@@ -16,21 +15,6 @@ import FindButton from "./FindButton";
 import RecentView from "./RecentView";
 
 class MyHome extends React.Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: "Home",
-    headerLeft: (
-      <Icon
-        navigate={navigation.navigate}
-        name="ios-menu"
-        type="ionicon"
-        style={{ paddingLeft: 10 }}
-        // onPress={() => navigation.drawerOpen()}
-      />
-    ),
-    drawerLabel: "Home",
-    drawerIcon: ({ tintColor }) => <Icon name="ios-home" type="ionicon" />
-  });
-
   render() {
     return (
       <View style={styles.container}>

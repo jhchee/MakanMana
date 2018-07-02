@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-} from "react-native";
+import { StyleSheet, Text, View, ScrollView } from "react-native";
 import FriendBar from "./FriendBar";
 import FriendDetail from "./FriendDetail";
 import { Constants } from "expo";
@@ -20,7 +15,6 @@ class FriendSearchResult extends React.Component {
   }
   componentDidMount() {
     mobxstores.store.updateFriendList();
-    console.log(mobxstores.store.friendList);
     const { navigation } = this.props;
     const searchTarget = navigation.getParam("searchTarget");
     this._fetchSearchResult(searchTarget);
@@ -29,11 +23,9 @@ class FriendSearchResult extends React.Component {
     this.props.navigation.navigate("FriendDetail", { profileId: id });
   };
   _fetchSearchResult = searchTarget => {
-    console.log(searchTarget);
     var ENDPOINT = "http://10.0.2.2:8000/user_base/profile/list/?name=".concat(
       searchTarget
     );
-    console.log(ENDPOINT);
     fetch(ENDPOINT)
       .then(function(response) {
         return response.json();

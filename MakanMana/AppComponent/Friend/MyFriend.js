@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, ScrollView } from "react-native";
 import { Constants } from "expo";
 import { Container } from "native-base";
 import CustomHeader from "../../UIComponent/CustomHeader";
-import { Icon, SearchBar } from "react-native-elements";
+import { SearchBar } from "react-native-elements";
 import FriendDetail from "./FriendDetail";
 import FriendBar from "./FriendBar";
 import FriendSearchResult from "./FriendSearchResult";
@@ -24,7 +24,6 @@ class MyFriend extends React.Component {
   }
 
   _searchPerson = userName => {
-    console.log("hello world");
     this.props.navigation.navigate("SearchResult", { searchTarget: userName });
   };
   fetchFriend = () => {
@@ -38,7 +37,7 @@ class MyFriend extends React.Component {
         this.setState({ friendList: myJson.friend_list });
       });
   };
-  componentDidMount() {
+  async componentWillMount() {
     this.fetchFriend();
     mobxstores.store.updateFriendList();
   }

@@ -67,7 +67,6 @@ class MyProfile extends React.Component {
     this.props.navigation.navigate("Profile");
   };
   _ManipulateUserName = () => {
-    console.log("connected1");
     this.props.navigation.navigate("ChangeUserName");
   };
   _ManipulateStatus = () => {
