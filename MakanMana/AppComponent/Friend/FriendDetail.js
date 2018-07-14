@@ -1,17 +1,13 @@
 import React from "react";
 import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
 import { Constants } from "expo";
-import {
-  createDrawerNavigator,
-  StackNavigator,
-  DrawerItems,
-  SafeAreaView
-} from "react-navigation";
 
 class FriendDetail extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      profile_pic: "https://dummyimage.com/500x500/000/000000.png"
+    };
   }
   componentDidMount() {
     const { navigation } = this.props;
@@ -20,10 +16,6 @@ class FriendDetail extends React.Component {
     this._fetchProfileInfo(profileId);
   }
   _fetchProfileInfo(profileId) {
-    const ELMLAB = "http://192.168.31.60:8000/user_base/profile/detail/";
-    const HOSTEL = "http://172.17.6.127:8000/user_base/profile/detail/";
-    // const CORE = "http://10.163.26.52:19000/user_base/profile/detail/";
-    const CORE = "http://192.168.137.1:8000/user_base/profile/detail/";
     var ENDPOINT = "http://10.0.2.2:8000/user_base/profile/detail/".concat(
       profileId
     );
@@ -38,7 +30,7 @@ class FriendDetail extends React.Component {
           gender,
           preference,
           profile_name,
-          profile_pic,
+          profile_pic = "https://dummyimage.com/500x500/000/000000.png",
           recent_location_X,
           recent_location_Y,
           status
@@ -58,19 +50,36 @@ class FriendDetail extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text> {this.state.profileId} </Text>
-        {this.state.age ? <Text> {this.state.age} </Text> : null}
-        {this.state.gender ? <Text> {this.state.gender} </Text> : null}
-        {this.state.preference ? <Text>{this.state.preference}</Text> : null}
-        {this.state.recent_location_X ? <Text> {this.state.age} </Text> : null}
-        {this.state.recent_location_Y ? <Text> {this.state.age} </Text> : null}
-        {this.state.status ? <Text> {this.state.status} </Text> : null}
-        <Image
-          style={styles.profilePicture}
-          source={{
-            uri: this.state.profile_pic
-          }}
-        />
+        <View style={styles.imageContainer}>
+          <Image
+            style={styles.profilePicture}
+            source={{
+              uri: this.state.profile_pic
+            }}
+          />
+        </View>
+
+        {this.state.age ? (
+          <Text style={styles.textSetting}>
+            {" "}
+            <Text style={styles.fieldTitle}>Age</Text> {this.state.age}{" "}
+          </Text>
+        ) : null}
+        {this.state.gender ? (
+          <Text style={styles.textSetting}>
+            {" "}
+            <Text style={styles.fieldTitle}>Gender</Text> {this.state.gender}{" "}
+          </Text>
+        ) : null}
+        {/* {this.state.preference ? <Text>{this.state.preference}</Text> : null} */}
+        {/* {this.state.recent_location_X ? <Text> {this.state.age} </Text> : null} */}
+        {/* {this.state.recent_location_Y ? <Text> {this.state.age} </Text> : null} */}
+        {this.state.status ? (
+          <Text style={styles.textSetting}>
+            {" "}
+            <Text style={styles.fieldTitle}>Status</Text> {this.state.status}{" "}
+          </Text>
+        ) : null}
       </View>
     );
   }
@@ -86,6 +95,18 @@ const styles = StyleSheet.create({
     height: 50,
     width: 50,
     borderRadius: 100
+  },
+  imageContainer: {
+    marginLeft: 20,
+    marginTop: 50,
+    marginBottom: 20
+  },
+  textSetting: {
+    fontSize: 17
+  },
+  fieldTitle: {
+    fontWeight: "bold",
+    margin: 10
   }
 });
 export default FriendDetail;
