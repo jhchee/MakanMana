@@ -1,13 +1,6 @@
 import React from "react";
 
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  Button,
-  TouchableOpacity
-} from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { Constants } from "expo";
 import CustomHeader from "../../UIComponent/CustomHeader";
 import { Icon } from "react-native-elements";
@@ -21,7 +14,7 @@ class MyProfile extends React.Component {
     super(props);
     this.state = {
       user_name: "",
-      user_picture: "",
+      user_picture: "https://dummyimage.com/500x500/000000/000000.png",
       user_age: "",
       user_gender: "",
       user_status: ""
@@ -29,12 +22,9 @@ class MyProfile extends React.Component {
   }
 
   restAPI = () => {
-    const ELMLAB = "http://192.168.31.60:8000/user_base/profile/list/?email=";
-    const HOSTEL = "http://172.17.6.127:8000/user_base/profile/list/?email=";
-    // const CORE = "http://10.163.26.52:19000/user_base/profile/list/?email=";
-    const CORE = "http://10.0.2.2:8000/user_base/profile/list/?email=";
+    const BASE_URL = "http://10.0.2.2:8000/user_base/profile/list/?email=";
     const email = "chee@gmail.com";
-    var ENDPOINT = CORE.concat(email);
+    var ENDPOINT = BASE_URL.concat(email);
 
     fetch(ENDPOINT)
       .then(function(response) {
@@ -44,7 +34,6 @@ class MyProfile extends React.Component {
         const {
           profile_pic = "https://dummyimage.com/500x500/000000/000000.png",
           profile_name,
-          user,
           gender,
           status,
           recent_location_X,

@@ -25,14 +25,12 @@ class ChangeUserName extends React.Component {
   };
 
   _updateUserName = () => {
-    const ELMLAB = "http://192.168.31.60:8000/user_base/profile/detail/";
-    const HOSTEL = "http://10.0.2.2:8000/user_base/profile/detail/";
-    const CORE = "http://10.163.26.52:19000/user_base/profile/detail/";
+    const BASE_URL = "http://10.0.2.2:8000/user_base/profile/detail/";
     const profile_id = "1";
     const token = "Token ".concat(
       "966b2172505684bb4630ba62feea43531e173ec9523daf0b019728a671d27e51"
     );
-    var ENDPOINT = HOSTEL.concat(profile_id);
+    var ENDPOINT = BASE_URL.concat(profile_id);
     fetch(ENDPOINT, {
       method: "PUT",
       headers: {
@@ -104,7 +102,6 @@ const styles = StyleSheet.create({
     margin: 10
   },
   inputField: {
-    // color: "orange",
     fontSize: 18,
     height: 50,
     justifyContent: "center",
