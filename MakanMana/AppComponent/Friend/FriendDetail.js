@@ -15,12 +15,12 @@ class FriendDetail extends React.Component {
     this.setState({ profileId: profileId });
     this._fetchProfileInfo(profileId);
   }
-  _fetchProfileInfo(profileId) {
+  _fetchProfileInfo = async profileId => {
     var ENDPOINT = "http://10.0.2.2:8000/user_base/profile/detail/".concat(
       profileId
     );
 
-    fetch(ENDPOINT)
+    const fetching = await fetch(ENDPOINT)
       .then(function(response) {
         return response.json();
       })
@@ -46,7 +46,7 @@ class FriendDetail extends React.Component {
           status
         });
       });
-  }
+  };
   render() {
     return (
       <View style={styles.container}>

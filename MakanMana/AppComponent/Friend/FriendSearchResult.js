@@ -22,11 +22,11 @@ class FriendSearchResult extends React.Component {
   _detailPage = id => {
     this.props.navigation.navigate("FriendDetail", { profileId: id });
   };
-  _fetchSearchResult = searchTarget => {
+  _fetchSearchResult = async searchTarget => {
     var ENDPOINT = "http://10.0.2.2:8000/user_base/profile/list/?name=".concat(
       searchTarget
     );
-    fetch(ENDPOINT)
+    const fetching = await fetch(ENDPOINT)
       .then(function(response) {
         return response.json();
       })
