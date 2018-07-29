@@ -26,7 +26,7 @@ class FriendSearchResult extends React.Component {
     var ENDPOINT = "http://10.0.2.2:8000/user_base/profile/list/?name=".concat(
       searchTarget
     );
-    const fetching = await fetch(ENDPOINT)
+    await fetch(ENDPOINT)
       .then(function(response) {
         return response.json();
       })

@@ -126,4 +126,3 @@ export default (MyFriend = createStackNavigator(
     headerMode: "none"
   }
 ));
-// export default MyFriend;
