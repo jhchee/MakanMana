@@ -25,7 +25,26 @@ class FriendBar extends React.Component {
     }
     return true;
   }
-  _addFriend() {}
+  _addFriend() {
+    const BASE_URL = "http://10.0.2.2:8000/user_base/friend/detail/";
+    const profile_id = "1";
+    const token = "Token ".concat(
+      "966b2172505684bb4630ba62feea43531e173ec9523daf0b019728a671d27e51"
+    );
+    var ENDPOINT = BASE_URL.concat(profile_id);
+    fetch(ENDPOINT, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: token
+      },
+      body: JSON.stringify({
+        // friend_list: this.friend_list
+      })
+    });
+    // this.setState({})
+  }
   render() {
     return (
       <View>

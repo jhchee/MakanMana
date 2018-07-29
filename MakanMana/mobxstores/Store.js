@@ -21,11 +21,6 @@ class Store {
         this.friendList = jsonResult.friend_list;
       });
   }
-
-  // @computed
-  // get friendList() {
-  //   return this.friendList;
-  // }
 }
 
 export default Store;

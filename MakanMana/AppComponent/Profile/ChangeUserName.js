@@ -11,7 +11,6 @@ import {
   Dimensions
 } from "react-native";
 import { Constants } from "expo";
-import { createStackNavigator } from "react-navigation";
 
 class ChangeUserName extends React.Component {
   constructor(props) {
