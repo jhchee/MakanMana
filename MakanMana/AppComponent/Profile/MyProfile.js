@@ -52,14 +52,23 @@ class MyProfile extends React.Component {
     this.restAPI();
   }
 
+  refreshStatus = status => {
+    this.state.user_status = status;
+  };
+
   _Profile = () => {
     this.props.navigation.navigate("Profile");
   };
   _ManipulateUserName = () => {
-    this.props.navigation.navigate("ChangeUserName");
+    this.props.navigation.navigate("ChangeUserName", {
+      username: this.state.user_name
+    });
   };
   _ManipulateStatus = () => {
-    this.props.navigation.navigate("ChangeStatus");
+    this.props.navigation.navigate("ChangeStatus", {
+      status: this.state.user_status,
+      refreshFunction: this.refreshStatus
+    });
   };
   _ManipulatePicture = () => {
     this.props.navigation.navigate("ChangePicture");
@@ -217,5 +226,3 @@ export default (MyProfile = createStackNavigator(
     headerMode: "none"
   }
 ));
-
-// export default MyProfile;

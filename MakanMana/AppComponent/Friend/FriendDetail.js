@@ -45,7 +45,6 @@ class FriendDetail extends React.Component {
           recent_location_Y,
           status
         });
-        console.log(this.state.preference);
       });
   };
   _back = () => {

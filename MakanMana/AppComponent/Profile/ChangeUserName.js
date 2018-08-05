@@ -16,9 +16,15 @@ class ChangeUserName extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "chee"
+      username: ""
     };
   }
+  componentWillMount() {
+    const { navigation } = this.props;
+    const username = navigation.getParam("username");
+    this.setState({ username: username });
+  }
+
   _goBack = () => {
     this.props.navigation.goBack(null);
   };
@@ -27,11 +33,11 @@ class ChangeUserName extends React.Component {
     const BASE_URL = "http://10.0.2.2:8000/user_base/profile/detail/";
     const profile_id = "1";
     const token = "Token ".concat(
-      "966b2172505684bb4630ba62feea43531e173ec9523daf0b019728a671d27e51"
+      "9051234390498155ed49aea36c518a1df8d666a7aeb392d92dce1cb455d9ffd0"
     );
     var ENDPOINT = BASE_URL.concat(profile_id);
     fetch(ENDPOINT, {
-      method: "PUT",
+      method: "PATCH",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
