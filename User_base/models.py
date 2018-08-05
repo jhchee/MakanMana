@@ -80,7 +80,7 @@ class Profile(models.Model):
     age = models.IntegerField(null=True, blank=True)
     GENDER_CHOICES = [(0, 'Male'), (1, 'Female'), (2, 'Unspecified')]
     gender = models.IntegerField(choices=GENDER_CHOICES, null=True, blank=True)
-    status = models.TextField(blank=True, default="Hey there! I am using Makan Mana")
+    status = models.TextField(blank=True, default="Hey there! I am using Makan Mana", max_length=30)
     recent_location_X = models.CharField(max_length=15, blank=True)
     recent_location_Y = models.CharField(max_length=15, blank=True)
     preference = models.ManyToManyField(Preference, blank=True)

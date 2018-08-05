@@ -192,11 +192,16 @@ class FriendBarView(generics.RetrieveAPIView):
     }
 
 
-class FriendListDetailView(generics.RetrieveDestroyAPIView):
+class FriendListDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = FriendList.objects.all()
     serializer_class = serializers.FriendSerializer
-    permission_classes = {}
-
+    # permission_classes = {IsOwner}
+    def patch(self, request, *args, **kwargs):
+        new_groups = validated_attrs.get('groups')
+        for group in new_groups:
+            instance.groups.add(group)
+        instance.save()
+        return instance
 
 class PreferenceCreateView(generics.ListCreateAPIView):
     queryset = Preference.objects.all()

@@ -60,11 +60,11 @@ class ProfileListSerializer(serializers.ModelSerializer):
     #     read_only=True,
     #     slug_field='tag',
     # )
-    user = serializers.SlugRelatedField(
-        many=False,
-        read_only=True,
-        slug_field='email'
-    )
+    # user = serializers.SlugRelatedField(
+    #     many=False,
+    #     read_only=True,
+    #     slug_field='email'
+    # )
 
     class Meta:
         model = Profile
