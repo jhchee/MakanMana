@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { Constants } from "expo";
 import { Icon } from "react-native-elements";
+import { Navigation } from "react-navigation";
 
 class FriendDetail extends React.Component {
   constructor(props) {
@@ -44,16 +45,27 @@ class FriendDetail extends React.Component {
           recent_location_Y,
           status
         });
+        console.log(this.state.preference);
       });
+  };
+  _back = () => {
+    const { goBack } = this.props.navigation;
+    goBack();
   };
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.backgroundContainer} />
-        <TouchableOpacity style={{ alignContent: "flex-start" }}>
+        <TouchableOpacity
+          style={{
+            position: "absolute",
+            top: Constants.statusBarHeight + 10,
+            left: 10
+          }}
+          onPress={this._back}
+        >
           <Icon name={"md-arrow-back"} type="ionicon" size={30} color="white" />
         </TouchableOpacity>
-
         <View style={styles.imageContainer}>
           <View style={styles.haloBackground}>
             <Image
@@ -69,22 +81,39 @@ class FriendDetail extends React.Component {
             {this.state.profile_name}
           </Text>
         </View>
+        <View style={{ marginTop: 40 }} />
 
-        <View style={styles.infoBox}>
-          {this.state.gender ? (
-            <View>
-              <Icon name={"plus"} type="entypo" size={30} color="black" />
-              <Text style={styles.fieldTitle}>{this.state.gender}</Text>
+        {this.state.gender ? (
+          <View style={styles.textBox}>
+            <View style={styles.fieldIndicator}>
+              <Icon
+                name="gender-transgender"
+                type="material-community"
+                size={20}
+              />
             </View>
-          ) : null}
-          {this.state.preference ? <Text>{this.state.preference}</Text> : null}
-          {this.state.status ? (
-            <Text style={styles.textSetting}>
-              {" "}
-              <Text style={styles.fieldTitle}>Status</Text> {this.state.status}{" "}
-            </Text>
-          ) : null}
-        </View>
+            <Text style={styles.userDetail}>{this.state.gender}</Text>
+          </View>
+        ) : null}
+
+        {this.state.status ? (
+          <View style={styles.textBox}>
+            <Text style={styles.fieldTitle}>Status{"        "}</Text>
+            <View
+              style={{
+                flexDirection: "row",
+                flex: 1,
+                maxWidth: 300
+              }}
+            >
+              <Text style={styles.textSetting}>{this.state.status}</Text>
+            </View>
+          </View>
+        ) : null}
+
+        {/* <View style={{ maxWidth: 50 }}>
+          <Text>{this.state.preference}</Text>
+        </View> */}
       </View>
     );
   }
@@ -107,11 +136,12 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   textSetting: {
-    fontSize: 17
+    fontSize: 17,
+    flex: 1,
+    flexWrap: "wrap"
   },
   fieldTitle: {
-    fontWeight: "bold",
-    margin: 10
+    fontWeight: "bold"
   },
   backgroundContainer: {
     position: "absolute",
@@ -119,7 +149,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: "orange",
+    backgroundColor: "#EE7600",
     height: 200
   },
   haloBackground: {
@@ -134,6 +164,19 @@ const styles = StyleSheet.create({
     marginTop: 50,
     marginLeft: 20,
     marginRight: 20
+  },
+  textBox: {
+    height: 55,
+    flexDirection: "row",
+    alignItems: "center",
+    left: 40
+  },
+  fieldIndicator: {
+    flex: 1
+  },
+  userDetail: {
+    fontSize: 17,
+    flex: 5
   }
 });
 export default FriendDetail;

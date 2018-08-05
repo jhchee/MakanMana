@@ -122,7 +122,7 @@ export default (MyFriend = createStackNavigator(
     }
   },
   {
-    // mode: "modal",
+    mode: "modal",
     headerMode: "none"
   }
 ));
