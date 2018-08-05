@@ -60,26 +60,21 @@ class ChangeUserName extends React.Component {
             style={styles.inputField}
           />
         </View>
-        {/* <View sytle={styles.buttonContainer}>
-          <View>
-            <TouchableOpacity
-              style={styles.navigateButton}
-              onPress={this._goBack}
-            >
-              <Text>CANCEL</Text>
+        <View style={{ flexDirection: "row" }}>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.button} onPress={this._goBack}>
+              <Text style={styles.buttonText}>Cancel</Text>
             </TouchableOpacity>
           </View>
-          <View>
+          <View style={styles.buttonContainer}>
             <TouchableOpacity
-              style={styles.navigateButton}
+              style={styles.button}
               onPress={this._updateUserName}
             >
-              <Text>CHANGE</Text>
+              <Text style={styles.buttonText}>Change</Text>
             </TouchableOpacity>
           </View>
-        </View> */}
-        <Button title="CANCEL" onPress={this._goBack} />
-        <Button title="CHANGE" onPress={this._updateUserName} />
+        </View>
       </View>
     );
   }
@@ -112,14 +107,21 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
-    height: 20,
-    width: 20
+
+    height: 50
   },
   navigateButton: {
     flex: 1,
     backgroundColor: "black",
     height: 20,
     width: 20
+  },
+  button: {
+    flex: 1
+  },
+  buttonText: {
+    textAlign: "center",
+    fontSize: 18
   }
 });
 
