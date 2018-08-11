@@ -4,25 +4,18 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
-  Button,
   TextInput,
   TouchableOpacity,
-  Dimensions
 } from "react-native";
 import { Constants } from "expo";
+import mobxstores from "../../mobxstores";
 
 class ChangeUserName extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: ""
+      username: mobxstores.personal.username
     };
-  }
-  componentWillMount() {
-    const { navigation } = this.props;
-    const username = navigation.getParam("username");
-    this.setState({ username: username });
   }
 
   _goBack = () => {

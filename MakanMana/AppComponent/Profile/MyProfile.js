@@ -8,17 +8,24 @@ import { createStackNavigator } from "react-navigation";
 import ChangePicture from "./ChangePicture";
 import ChangeUserName from "./ChangeUserName";
 import ChangeStatus from "./ChangeStatus";
+import { observer } from "mobx-react";
+import mobxstores from "../../mobxstores";
 
+@observer
 class MyProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user_name: "",
+      user_name: mobxstores.personal.username,
       user_picture: "https://dummyimage.com/500x500/000000/000000.png",
       user_age: "",
       user_gender: "",
-      user_status: ""
+      user_status: mobxstores.personal.status
     };
+  }
+  componentDidMount() {
+    this.setState(user_name, mobxstores.personal.username);
+    this.setState(user_status, mobxstores.personal.status);
   }
 
   restAPI = () => {
@@ -35,15 +42,17 @@ class MyProfile extends React.Component {
           profile_pic = "https://dummyimage.com/500x500/000000/000000.png",
           profile_name,
           gender,
-          status,
-          recent_location_X,
-          recent_location_Y
+          status
+          // recent_location_X,
+          // recent_location_Y
         } = myJson[0];
+        mobxstores.personal.setUserName(profile_name);
+        mobxstores.personal.setStatus(status);
         this.setState({
           user_picture: profile_pic,
-          user_name: profile_name,
+          user_name: mobxstores.personal.username,
           user_gender: gender,
-          user_status: status
+          user_status: mobxstores.personal.status
         });
       });
   };
@@ -52,32 +61,18 @@ class MyProfile extends React.Component {
     this.restAPI();
   }
 
-  refreshStatus = status => {
-    this.state.user_status = status;
-  };
-
   _Profile = () => {
     this.props.navigation.navigate("Profile");
   };
   _ManipulateUserName = () => {
-    this.props.navigation.navigate("ChangeUserName", {
-      username: this.state.user_name
-    });
+    this.props.navigation.navigate("ChangeUserName");
   };
   _ManipulateStatus = () => {
-    this.props.navigation.navigate("ChangeStatus", {
-      status: this.state.user_status,
-      refreshFunction: this.refreshStatus
-    });
+    this.props.navigation.navigate("ChangeStatus");
   };
   _ManipulatePicture = () => {
     this.props.navigation.navigate("ChangePicture");
   };
-  static navigationOptions = ({ navigation }) => ({
-    title: "Profile",
-    drawerLabel: "Profile",
-    drawerIcon: ({ tintColor }) => <Icon name="ios-person" type="ionicon" />
-  });
   render() {
     return (
       <View style={styles.container}>
@@ -103,7 +98,9 @@ class MyProfile extends React.Component {
               <Icon name="account" type="material-community" size={20} />
             </View>
 
-            <Text style={styles.userDetail}>{this.state.user_name}</Text>
+            <Text style={styles.userDetail}>
+              {mobxstores.personal.username}
+            </Text>
             <View style={styles.editPencil}>
               <TouchableOpacity onPress={this._ManipulateUserName}>
                 <Icon
@@ -141,7 +138,7 @@ class MyProfile extends React.Component {
               style={styles.userStatus}
               onPress={this._ManipulateStatus}
             >
-              <Text>{this.state.user_status}</Text>
+              <Text>{mobxstores.personal.status}</Text>
             </TouchableOpacity>
           </View>
         ) : null}

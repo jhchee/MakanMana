@@ -2,7 +2,6 @@ import React from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { Constants } from "expo";
 import { Icon } from "react-native-elements";
-import { Navigation } from "react-navigation";
 
 class FriendDetail extends React.Component {
   constructor(props) {
@@ -97,7 +96,10 @@ class FriendDetail extends React.Component {
 
         {this.state.status ? (
           <View style={styles.textBox}>
-            <Text style={styles.fieldTitle}>Status{"        "}</Text>
+            <Text style={styles.fieldTitle}>
+              Status
+              {"        "}
+            </Text>
             <View
               style={{
                 flexDirection: "row",

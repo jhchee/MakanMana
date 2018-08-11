@@ -1,11 +1,16 @@
 import { observable, action, computed, toJS } from "mobx";
 
 class Personal {
-  @observable username = "Hello World";
+  @observable username = "Dummy";
+  @observable status = "Nothing";
 
   @action
-  setusername(username) {
+  setUserName(username) {
     this.username = username;
+  }
+  @action
+  setStatus(status) {
+    this.status = status;
   }
 }
 

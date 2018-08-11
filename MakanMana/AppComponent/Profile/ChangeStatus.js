@@ -8,22 +8,19 @@ import {
   TouchableOpacity
 } from "react-native";
 import { Constants } from "expo";
+import { observer } from "mobx-react";
+import mobxstores from "../../mobxstores";
+
+@observer
 class ChangeStatus extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      status: ""
+      status: mobxstores.personal.status
     };
-  }
-  componentWillMount() {
-    const { navigation } = this.props;
-    const status = navigation.getParam("status");
-    this.setState({ status: status });
   }
 
   _goBack = () => {
-    const refreshFunction = this.props.navigation.state.params.refreshFunction;
-    refreshFunction(this.state.status);
     this.props.navigation.goBack(null);
   };
 

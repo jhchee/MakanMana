@@ -1,5 +1,6 @@
 import { observable, action, computed, toJS } from "mobx";
 
+// This class contains about not so personal information.
 class Store {
   @observable userId = 1;
   @observable baseUrl = "http://10.0.2.2:8000/user_base/";
