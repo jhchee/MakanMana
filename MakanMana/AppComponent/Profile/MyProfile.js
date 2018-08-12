@@ -29,9 +29,9 @@ class MyProfile extends React.Component {
   }
 
   restAPI = () => {
-    const BASE_URL = "http://10.0.2.2:8000/user_base/profile/list/?email=";
-    const email = "chee@gmail.com";
-    var ENDPOINT = BASE_URL.concat(email);
+    const BASE_URL = mobxstores.store.baseUrl;
+    const email = mobxstores.personal.email;
+    var ENDPOINT = BASE_URL.concat("profile/list/?email=").concat(email);
 
     fetch(ENDPOINT)
       .then(function(response) {
@@ -41,7 +41,6 @@ class MyProfile extends React.Component {
         const {
           profile_pic = "https://dummyimage.com/500x500/000000/000000.png",
           profile_name,
-          gender,
           status
           // recent_location_X,
           // recent_location_Y
@@ -51,10 +50,10 @@ class MyProfile extends React.Component {
         this.setState({
           user_picture: profile_pic,
           user_name: mobxstores.personal.username,
-          user_gender: gender,
           user_status: mobxstores.personal.status
         });
       });
+    console.log(this.state.user_picture);
   };
 
   componentDidMount() {

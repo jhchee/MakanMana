@@ -2,6 +2,8 @@ import React from "react";
 
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { Constants, ImagePicker } from "expo";
+import mobxstores from "../../mobxstores";
+
 class ChangePicture extends React.Component {
   constructor(props) {
     super(props);
@@ -40,12 +42,11 @@ class ChangePicture extends React.Component {
       type: "image/png"
     });
 
-    const BASE_URL = "http://10.0.2.2:8000/user_base/profile/detail/";
-    const profile_id = "1";
-    const token = "Token ".concat(
-      "3c2b9c915f83a518b940065a6b103ee4e8a02efdc58ab1eeb5b25d1197f2c4c2"
-    );
-    var ENDPOINT = BASE_URL.concat(profile_id);
+    const BASE_URL = mobxstores.store.baseUrl;
+    const profile_id = mobxstores.personal.profileId;
+    const token = mobxstores.store.token;
+    const ENDPOINT = BASE_URL.concat("profile/detail/").concat(profile_id);
+
     fetch(ENDPOINT, {
       method: "PATCH",
       headers: {

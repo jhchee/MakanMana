@@ -25,12 +25,10 @@ class ChangeStatus extends React.Component {
   };
 
   _updateUserName = () => {
-    const BASE_URL = "http://10.0.2.2:8000/user_base/profile/detail/";
-    const profile_id = "1";
-    const token = "Token ".concat(
-      "9051234390498155ed49aea36c518a1df8d666a7aeb392d92dce1cb455d9ffd0"
-    );
-    var ENDPOINT = BASE_URL.concat(profile_id);
+    const BASE_URL = mobxstores.store.baseUrl;
+    const profile_id = mobxstores.personal.profileId;
+    const token = mobxstores.store.token;
+    const ENDPOINT = BASE_URL.concat("profile/detail/").concat(profile_id);
     fetch(ENDPOINT, {
       method: "PATCH",
       headers: {
