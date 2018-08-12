@@ -42,6 +42,7 @@ class ChangeStatus extends React.Component {
         status: this.state.status
       })
     });
+    mobxstores.personal.status = this.state.status;
     this._goBack();
   };
 

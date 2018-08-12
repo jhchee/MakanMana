@@ -40,6 +40,7 @@ class ChangeUserName extends React.Component {
         profile_name: this.state.username
       })
     });
+    mobxstores.personal.username = this.state.username
     this._goBack();
   };
 
