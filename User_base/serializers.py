@@ -55,6 +55,7 @@ class ProfileListSerializer(serializers.ModelSerializer):
     """
     Profile serializer with gender field in string form
     """
+
     # preference = serializers.SlugRelatedField(
     #     many=True,
     #     read_only=True,
@@ -76,6 +77,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     Generic profile serializer
     """
     gender = serializers.CharField(source='get_gender_display')
+
     class Meta:
         model = Profile
         fields = '__all__'
@@ -95,6 +97,36 @@ class FriendListSerializer(serializers.ModelSerializer):
         model = FriendList
         fields = '__all__'
 
+
+class AddFriendSerializer(serializers.ModelSerializer):
+    """
+    Update method is modified so can append friend to friend list
+    """
+    class Meta:
+        model = FriendList
+        fields = '__all__'
+
+    def update(self, instance, validated_data):
+        friend_datas = validated_data.pop('friend_list')  # extract friend_data (profile)
+        for friend_data in friend_datas:
+            instance.friend_list.add(friend_data)
+        instance.save()
+        return instance
+
+class DeleteFriendSerializer(serializers.ModelSerializer):
+    """
+    Update method is modified so can delete friend from friend list
+    """
+    class Meta:
+        model = FriendList
+        fields = '__all__'
+
+    def update(self, instance, validated_data):
+        friend_datas = validated_data.pop('friend_list')  # extract friend_data (profile)
+        for friend_data in friend_datas:
+            instance.friend_list.remove(friend_data)
+        instance.save()
+        return instance
 
 class FriendSerializer(serializers.ModelSerializer):
     """

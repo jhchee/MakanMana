@@ -21,6 +21,9 @@ urlpatterns = [
     path('friend/bar/<pk>', views.FriendBarView.as_view(), name='friend-bar'),
     path('friend/detail/<pk>', views.FriendListDetailView.as_view(), name='friend-detail'),
 
+    path('friend/add/<pk>', views.AddFriend.as_view(), name='add_friend'),
+    path('friend/delete/<pk>', views.DeleteFriend.as_view(), name='delete_friend'),
+
     path('preference/create/', views.PreferenceCreateView.as_view(), name='preference-create'),
     path('preference/list/', views.PreferenceListView.as_view(), name='preference-list'),
     path('preference/detail/<pk>', views.PreferenceDetailView.as_view(), name='preference-detail'),
