@@ -200,11 +200,17 @@ class FriendListDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class AddFriend(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Add friend by patching the url with user id
+    """
     queryset = FriendList.objects.all()
     serializer_class = serializers.AddFriendSerializer
 
 
 class DeleteFriend(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Remove friend by patching the url with user id
+    """
     queryset = FriendList.objects.all()
     serializer_class = serializers.DeleteFriendSerializer
 
