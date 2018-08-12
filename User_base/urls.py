@@ -28,6 +28,4 @@ urlpatterns = [
     path('preference/list/', views.PreferenceListView.as_view(), name='preference-list'),
     path('preference/detail/<pk>', views.PreferenceDetailView.as_view(), name='preference-detail'),
 
-
-    #path('friend/bar/')
 ]

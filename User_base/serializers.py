@@ -102,6 +102,7 @@ class AddFriendSerializer(serializers.ModelSerializer):
     """
     Update method is modified so can append friend to friend list
     """
+
     class Meta:
         model = FriendList
         fields = '__all__'
@@ -113,10 +114,12 @@ class AddFriendSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
+
 class DeleteFriendSerializer(serializers.ModelSerializer):
     """
     Update method is modified so can delete friend from friend list
     """
+
     class Meta:
         model = FriendList
         fields = '__all__'
@@ -127,6 +130,7 @@ class DeleteFriendSerializer(serializers.ModelSerializer):
             instance.friend_list.remove(friend_data)
         instance.save()
         return instance
+
 
 class FriendSerializer(serializers.ModelSerializer):
     """
